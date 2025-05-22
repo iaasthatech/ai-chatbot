@@ -60,11 +60,26 @@ export function Chat({
     experimental_throttle: 100,
     sendExtraMessageFields: true,
     generateId: generateUUID,
-    experimental_prepareRequestBody: (body) => ({
-      id,
-      message: body.messages.at(-1),
-      selectedChatModel,
-    }),
+    experimental_prepareRequestBody: (body) => {
+      const lastMessage = body.messages.at(-1);
+      
+      // Filter out removed attachments from the last message
+      const filteredAttachments = (lastMessage?.experimental_attachments || []).filter(
+        (attachment: Attachment) => attachment?.url // only include valid attachments
+      );
+
+      return {
+        id,
+        message: {
+          ...lastMessage,
+          experimental_attachments: filteredAttachments
+        },
+        selectedChatModel,
+      };
+    },
+      
+      
+    
     onFinish: () => {
       mutate(unstable_serialize(getChatHistoryPaginationKey));
     },

@@ -73,6 +73,12 @@ function PureMultimodalInput({
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = '98px';
     }
+    const handleRemoveAttachment = (urlToRemove: string) => {
+  setAttachments((currentAttachments) =>
+    currentAttachments.filter((attachment) => attachment.url !== urlToRemove)
+  );
+};
+
   };
 
   const [localStorageInput, setLocalStorageInput] = useLocalStorage(
@@ -128,36 +134,24 @@ function PureMultimodalInput({
   ]);
 
   const uploadFile = async (file: File) => {
-    try {
-      const data = await apiClient.uploadFile(file);
-      return {
-        url: data.url,
-        name: data.pathname,
-        contentType: data.contentType,
-      };
-    } catch (error) {
-      toast.error('Failed to upload file, please try again!');
-    }
-  };
+  try {
+    const data = await apiClient.uploadFile(file);
+    return {
+      url: data.url,
+      name: data.pathname,
+      contentType: data.contentType,
+    };
+  } catch (error: any) {
+    console.error("Upload error:", error);
 
-  // ✅ Add this below uploadFile
-  const handleDeleteUpload = async (chatId: string) => {
-    try {
-      const res = await fetch(`/api/chat/upload/${chatId}`, {
-         method: 'DELETE',
-      });
+    // Extract meaningful backend error
+    const backendMessage = error?.response?.data?.error;
 
-      if (!res.ok) {
-        throw new Error('Failed to delete file');
-      }
-
-      toast.success('File deleted. You can now upload a new one!');
-      // Optionally: remove the attachment from UI state here
-    } catch (error) {
-      console.error('Error deleting file:', error);
-      toast.error('Error deleting file.');
-    }
-  };
+    toast.error(
+      backendMessage || 'Unsupported file format. Allowed formats are: pdf, jpg, jpeg, png, csv, xls, xlsx'
+    );   
+  }
+};
 
   const handleFileChange = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
@@ -213,7 +207,6 @@ function PureMultimodalInput({
              attachment={attachment}
              isUploading={uploadQueue.includes(attachment.name ?? '')}
              chatId={chatId!} // ✅ assumes chatId is string and exists
-             handleDeleteUpload={handleDeleteUpload}
             />
           ))}
 
@@ -227,7 +220,6 @@ function PureMultimodalInput({
               }}
               isUploading={true}
               chatId={chatId!}
-              handleDeleteUpload={handleDeleteUpload}
             />
           ))}
         </div>
