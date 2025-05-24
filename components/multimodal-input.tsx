@@ -73,6 +73,20 @@ function PureMultimodalInput({
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = '98px';
     }
+    
+    
+    
+    const handleRemoveAttachment = (urlToRemove: string) => {
+  setAttachments((currentAttachments) =>
+    currentAttachments.filter((attachment) => attachment.url !== urlToRemove)
+  );
+
+
+
+
+
+};
+
   };
 
   const [localStorageInput, setLocalStorageInput] = useLocalStorage(
@@ -127,18 +141,34 @@ function PureMultimodalInput({
     chatId,
   ]);
 
+  
+  
+  
+  
   const uploadFile = async (file: File) => {
-    try {
-      const data = await apiClient.uploadFile(file);
-      return {
-        url: data.url,
-        name: data.pathname,
-        contentType: data.contentType,
-      };
-    } catch (error) {
-      toast.error('Failed to upload file, please try again!');
-    }
-  };
+  try {
+    const data = await apiClient.uploadFile(file);
+    return {
+      url: data.url,
+      name: data.pathname,
+      contentType: data.contentType,
+    };
+  } catch (error: any) {
+    console.error("Upload error:", error);
+
+    // Extract meaningful backend error
+    const backendMessage = error?.response?.data?.error;
+
+    toast.error(
+      backendMessage || 'Unsupported file format. Allowed formats are: pdf, jpg, jpeg, png, csv, xls, xlsx'
+    );   
+  }
+};
+
+
+
+
+
 
   const handleFileChange = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
@@ -189,7 +219,12 @@ function PureMultimodalInput({
           className="flex flex-row gap-2 overflow-x-scroll items-end"
         >
           {attachments.map((attachment) => (
-            <PreviewAttachment key={attachment.url} attachment={attachment} />
+            <PreviewAttachment 
+             key={attachment.url} 
+             attachment={attachment}
+             isUploading={uploadQueue.includes(attachment.name ?? '')}
+             chatId={chatId!} // ✅ assumes chatId is string and exists
+            />
           ))}
 
           {uploadQueue.map((filename) => (
@@ -201,6 +236,7 @@ function PureMultimodalInput({
                 contentType: '',
               }}
               isUploading={true}
+              chatId={chatId!}
             />
           ))}
         </div>
