@@ -73,10 +73,18 @@ function PureMultimodalInput({
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = '98px';
     }
+    
+    
+    
     const handleRemoveAttachment = (urlToRemove: string) => {
   setAttachments((currentAttachments) =>
     currentAttachments.filter((attachment) => attachment.url !== urlToRemove)
   );
+
+
+
+
+
 };
 
   };
@@ -133,6 +141,10 @@ function PureMultimodalInput({
     chatId,
   ]);
 
+  
+  
+  
+  
   const uploadFile = async (file: File) => {
   try {
     const data = await apiClient.uploadFile(file);
@@ -152,6 +164,11 @@ function PureMultimodalInput({
     );   
   }
 };
+
+
+
+
+
 
   const handleFileChange = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {

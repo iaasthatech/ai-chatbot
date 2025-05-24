@@ -60,6 +60,8 @@ export function Chat({
     experimental_throttle: 100,
     sendExtraMessageFields: true,
     generateId: generateUUID,
+
+    
     experimental_prepareRequestBody: (body) => {
       const lastMessage = body.messages.at(-1);
       

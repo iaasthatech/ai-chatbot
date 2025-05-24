@@ -131,6 +131,12 @@ export class ApiClient {
     return response.data;
   }
 
+  
+  
+  
+  
+  
+  
   async uploadFile(file: File): Promise<{
     url: string;
     downloadUrl: string;
@@ -140,14 +146,24 @@ export class ApiClient {
   }> {
     const formData = new FormData();
     formData.append('file', file);
-
-    const response = await this.client.post('/api/chats/uploads', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response.data.data;
+    try {
+      const response = await this.client.post('/api/chats/uploads', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data.data;
+    } catch (error) {
+      // Rethrow to be handled in the component
+      throw error;
+    }
   }
+
+
+
+
+
+  
 
   async getChats() {
     const response = await this.client.get('/api/chats');
