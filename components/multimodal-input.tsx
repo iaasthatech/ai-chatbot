@@ -74,18 +74,11 @@ function PureMultimodalInput({
       textareaRef.current.style.height = '98px';
     }
     
-    
-    
-    const handleRemoveAttachment = (urlToRemove: string) => {
-  setAttachments((currentAttachments) =>
-    currentAttachments.filter((attachment) => attachment.url !== urlToRemove)
-  );
-
-
-
-
-
-};
+    const handleRemoveAttachment = (urlToRemove: string) => {    //changes
+  setAttachments((currentAttachments) =>                         //changes
+    currentAttachments.filter((attachment) => attachment.url !== urlToRemove)  //changes
+  );  //changes
+};                                                                                 
 
   };
 
@@ -141,34 +134,25 @@ function PureMultimodalInput({
     chatId,
   ]);
 
-  
-  
-  
-  
-  const uploadFile = async (file: File) => {
-  try {
-    const data = await apiClient.uploadFile(file);
-    return {
-      url: data.url,
-      name: data.pathname,
-      contentType: data.contentType,
-    };
-  } catch (error: any) {
-    console.error("Upload error:", error);
+  const uploadFile = async (file: File) => {      //changes
+  try {      //changes
+    const data = await apiClient.uploadFile(file);    //changes
+    return {    //changes
+      url: data.url,   //changes
+      name: data.pathname,   //changes 
+      contentType: data.contentType,  //changes
+    };    //changes
+  } catch (error: any) {   //changes
+    console.error("Upload error:", error);  //changes
+                            
+    // Extract meaningful backend error   //changes
+    const backendMessage = error?.response?.data?.error;  //changes
 
-    // Extract meaningful backend error
-    const backendMessage = error?.response?.data?.error;
-
-    toast.error(
-      backendMessage || 'Unsupported file format. Allowed formats are: pdf, jpg, jpeg, png, csv, xls, xlsx'
-    );   
-  }
+    toast.error(                                                                //changes
+      backendMessage || 'Unsupported file format. Allowed formats are: pdf, jpg, jpeg, png, csv, xls, xlsx'   //changes
+    );   //changes
+  }  //changes
 };
-
-
-
-
-
 
   const handleFileChange = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
