@@ -100,21 +100,22 @@ const PurePreviewMessage = ({
                   return (
                     <div key={key} className="flex flex-row gap-2 items-start">
                       {message.role === 'user' && !isReadonly && (
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <Button
-                              data-testid="message-edit-button"
-                              variant="ghost"
-                              className="px-2 h-fit rounded-full text-muted-foreground opacity-0 group-hover/message:opacity-100"
-                              onClick={() => {
-                                setMode('edit');
-                              }}
-                            >
-                              <PencilEditIcon />
-                            </Button>
-                          </TooltipTrigger>
-                          <TooltipContent>Edit message</TooltipContent>
-                        </Tooltip>
+                        <></>
+                        // <Tooltip>
+                        //   <TooltipTrigger asChild>
+                        //     <Button
+                        //       data-testid="message-edit-button"
+                        //       variant="ghost"
+                        //       className="px-2 h-fit rounded-full text-muted-foreground opacity-0 group-hover/message:opacity-100"
+                        //       onClick={() => {
+                        //         setMode('edit');
+                        //       }}
+                        //     >
+                        //       <PencilEditIcon />
+                        //     </Button>
+                        //   </TooltipTrigger>
+                        //   <TooltipContent>Edit message</TooltipContent>
+                        // </Tooltip>
                       )}
 
                       <div
@@ -215,7 +216,7 @@ const PurePreviewMessage = ({
               }
             })}
 
-            {!isReadonly && (
+            {/* {!isReadonly && (
               <MessageActions
                 key={`action-${message.id}`}
                 chatId={chatId}
@@ -223,7 +224,7 @@ const PurePreviewMessage = ({
                 vote={vote}
                 isLoading={isLoading}
               />
-            )}
+            )} */}
           </div>
         </div>
       </motion.div>
@@ -268,7 +269,7 @@ export const ThinkingMessage = () => {
 
         <div className="flex flex-col gap-2 w-full">
           <div className="flex flex-col gap-4 text-muted-foreground">
-            Hmm... I'm thinking...  
+            Ok, I'm thinking...  
           </div>
         </div>
       </div>
