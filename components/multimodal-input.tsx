@@ -72,15 +72,15 @@ function PureMultimodalInput({
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = '98px';
-    }
-    
-    const handleRemoveAttachment = (urlToRemove: string) => {    //changes
-  setAttachments((currentAttachments) =>                         //changes
-    currentAttachments.filter((attachment) => attachment.url !== urlToRemove)  //changes
-  );  //changes
-};                                                                                 
+    }                                                                             
 
   };
+
+  const handleRemoveAttachment = (urlToRemove: string) => {        //changes
+    setAttachments((currentAttachments) =>                         //changes
+      currentAttachments.filter((attachment) => attachment.url !== urlToRemove)   //changes
+      );  //changes
+  };  //changes                          
 
   const [localStorageInput, setLocalStorageInput] = useLocalStorage(
     'input',
@@ -208,6 +208,7 @@ function PureMultimodalInput({
              attachment={attachment}
              isUploading={uploadQueue.includes(attachment.name ?? '')}
              chatId={chatId!} // ✅ assumes chatId is string and exists
+              onDelete={() => handleRemoveAttachment(attachment.url)} // ✅ Add this line
             />
           ))}
 

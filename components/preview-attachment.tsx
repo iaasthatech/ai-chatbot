@@ -1,19 +1,20 @@
 import type { Attachment } from 'ai';
-
 import { LoaderIcon } from './icons';
 
 export const PreviewAttachment = ({
   attachment,
   isUploading = false,
   chatId,
-  onDelete,   //changes
+  onDelete,
 }: {
   attachment: Attachment;
   isUploading?: boolean;
   chatId?: string;
-  onDelete?: (attachment: Attachment) => void;  //changes
+  onDelete?: (attachment: Attachment) => void;
 }) => {
   const { name, url, contentType } = attachment;
+
+  console.log("Rendering attachment preview:", attachment); // Debug log
 
   return (
     <div data-testid="input-attachment-preview" className="flex flex-col gap-2">
@@ -26,7 +27,7 @@ export const PreviewAttachment = ({
             className="rounded-md size-full object-cover"
           />
         ) : (
-          <div className="" />
+          <div className="text-sm text-gray-500">Non-image attachment</div>
         )}
 
         {isUploading && (
@@ -38,16 +39,16 @@ export const PreviewAttachment = ({
           </div>
         )}
 
-        {onDelete && (    //changes
-          <button    //changes
-            onClick={() => onDelete(attachment)}    //changes
-            className="absolute top-0 right-0 m-1 text-white bg-black bg-opacity-50 rounded-full w-5 h-5 flex items-center justify-center hover:bg-opacity-70 transition"    //changes
-            aria-label="Remove attachment"    //changes
-          >                                                    
-            &times;                                                  
-          </button>  //changes
-        )}                                                           
-      </div>                                                          
+        {onDelete && (
+          <button
+            onClick={() => onDelete(attachment)}
+            className="absolute top-0 right-0 border border-red-500 z-10 m-1 text-white bg-black bg-opacity-50 rounded-full w-5 h-5 flex items-center justify-center hover:bg-opacity-70 transition"
+            aria-label="Remove attachment"
+          >
+            &times;
+          </button>
+        )}
+      </div>
       <div className="text-xs text-zinc-500 max-w-16 truncate">{name}</div>
     </div>
   );
