@@ -9,8 +9,10 @@ import {
   DocumentRequest,
   SuggestionRequest,
   ApiError,
-  ApiResponse
+  ApiResponse,
+  Vote
 } from './api-client.types';
+import type { ChatVisibilityUpdate } from './api-client.types';
 
 export class ApiClient {
   private client: AxiosInstance;
@@ -129,23 +131,27 @@ export class ApiClient {
     return response.data;
   }
 
-  async uploadFile(file: File): Promise<{
-    url: string;
-    downloadUrl: string;
-    pathname: string;
-    contentType: string;
-    contentDisposition: string;
-  }> {
-    const formData = new FormData();
-    formData.append('file', file);
-
-    const response = await this.client.post('/api/chats/uploads', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data',
-      },
-    });
-    return response.data.data;
-  }
+   async uploadFile(file: File): Promise<{  //changes
+    url: string;  //changes
+    downloadUrl: string;  //changes
+    pathname: string;  //changes
+    contentType: string;   //changes
+    contentDisposition: string;  //changes
+  }> {   //changes
+    const formData = new FormData();   //changes                 
+    formData.append('file', file); //changes
+    try {   //changes
+      const response = await this.client.post('/api/chats/uploads', formData, {  //changes 
+        headers: {  //changes
+          'Content-Type': 'multipart/form-data',  //changes
+        },  //changes
+      });   //changes
+      return response.data.data;    //changes 
+    } catch (error) {  //changes
+      // Rethrow to be handled in the component    //changes
+      throw error;     //changes
+    }       //changes
+  }  //changes
 
   async getChats() {
     const response = await this.client.get('/api/chats');
@@ -177,9 +183,9 @@ export class ApiClient {
     return response.data;
   }
 
-  async updateChatVisibility(chatId: string, data: { isVisible: boolean }) {
-    const response = await this.client.put(`/api/chats/${chatId}/visibility`, data);
-    return response.data;
+  async updateChatVisibility(chatId: string, data: ChatVisibilityUpdate) {
+  const response = await this.client.put(`/api/chats/${chatId}/visibility`, data);
+  return response.data;
   }
 
   // Message APIs
@@ -347,3 +353,4 @@ export class ApiClient {
 }
 
 export const apiClient = ApiClient.getInstance();
+export type { Vote }; // 👈 Add this to export the type

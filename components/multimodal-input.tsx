@@ -72,8 +72,15 @@ function PureMultimodalInput({
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
       textareaRef.current.style.height = '98px';
-    }
+    }                                                                             
+
   };
+
+  const handleRemoveAttachment = (urlToRemove: string) => {        //changes
+    setAttachments((currentAttachments) =>                         //changes
+      currentAttachments.filter((attachment) => attachment.url !== urlToRemove)   //changes
+      );  //changes
+  };  //changes                          
 
   const [localStorageInput, setLocalStorageInput] = useLocalStorage(
     'input',
@@ -127,18 +134,25 @@ function PureMultimodalInput({
     chatId,
   ]);
 
-  const uploadFile = async (file: File) => {
-    try {
-      const data = await apiClient.uploadFile(file);
-      return {
-        url: data.url,
-        name: data.pathname,
-        contentType: data.contentType,
-      };
-    } catch (error) {
-      toast.error('Failed to upload file, please try again!');
-    }
-  };
+  const uploadFile = async (file: File) => {      //changes
+  try {      //changes
+    const data = await apiClient.uploadFile(file);    //changes
+    return {    //changes
+      url: data.url,   //changes
+      name: data.pathname,   //changes 
+      contentType: data.contentType,  //changes
+    };    //changes
+  } catch (error: any) {   //changes
+    console.error("Upload error:", error);  //changes
+                            
+    // Extract meaningful backend error   //changes
+    const backendMessage = error?.response?.data?.error;  //changes
+
+    toast.error(                                                                //changes
+      backendMessage || 'Unsupported file format. Allowed formats are: pdf, jpg, jpeg, png, csv, xls, xlsx'   //changes
+    );   //changes
+  }  //changes
+};
 
   const handleFileChange = useCallback(
     async (event: ChangeEvent<HTMLInputElement>) => {
@@ -189,7 +203,13 @@ function PureMultimodalInput({
           className="flex flex-row gap-2 overflow-x-scroll items-end"
         >
           {attachments.map((attachment) => (
-            <PreviewAttachment key={attachment.url} attachment={attachment} />
+            <PreviewAttachment 
+             key={attachment.url} 
+             attachment={attachment}
+             isUploading={uploadQueue.includes(attachment.name ?? '')}
+             chatId={chatId!} // ✅ assumes chatId is string and exists
+              onDelete={() => handleRemoveAttachment(attachment.url)} // ✅ Add this line
+            />
           ))}
 
           {uploadQueue.map((filename) => (
@@ -201,6 +221,7 @@ function PureMultimodalInput({
                 contentType: '',
               }}
               isUploading={true}
+              chatId={chatId!}
             />
           ))}
         </div>
