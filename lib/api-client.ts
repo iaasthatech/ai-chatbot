@@ -11,6 +11,7 @@ import {
   ApiError,
   ApiResponse
 } from './api-client.types';
+import { startTokenWatcher } from './auth';
 
 export class ApiClient {
   private client: AxiosInstance;
@@ -72,6 +73,7 @@ export class ApiClient {
     const response = await this.client.post('/api/auth/login', data);
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);
+      startTokenWatcher(); // 👈 Add this
     }
     return response.data;
   }
@@ -80,6 +82,7 @@ export class ApiClient {
     const response = await this.client.post('/api/auth/register', data);
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);
+      startTokenWatcher(); // 👈 Add this
     }
     return response.data;
   }
@@ -88,6 +91,7 @@ export class ApiClient {
     const response = await this.client.post('/api/auth/guest');
     if (response.data.token) {
       localStorage.setItem('token', response.data.token);
+      startTokenWatcher(); // 👈 Add this
     }
     return response.data;
   }
