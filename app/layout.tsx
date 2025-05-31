@@ -4,6 +4,7 @@ import './globals.css';
 import { Toaster } from 'sonner';
 import { ThemeProvider } from '@/components/theme-provider';
 import { RouteGuard } from '@/components/RouteGuard';
+import { TokenWatcher } from '@/components/TokenWatcher'; // ✅ import it
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,6 +28,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <RouteGuard>
+            <TokenWatcher /> {/* ✅ start the auto-logout timer here */}
             {children}
           </RouteGuard>
           <Toaster position="top-center" />
@@ -35,3 +37,5 @@ export default function RootLayout({
     </html>
   );
 }
+
+

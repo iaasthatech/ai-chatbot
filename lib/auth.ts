@@ -1,4 +1,5 @@
 import { apiClient } from './api-client';
+import { jwtDecode } from 'jwt-decode';
 
 export type UserType = 'guest' | 'regular';
 
@@ -36,4 +37,36 @@ export async function getSession(): Promise<Session | null> {
   } catch (error) {
     return null;
   }
-} 
+}
+
+// --- Auto-logout on token expiry ---
+let logoutTimer: NodeJS.Timeout | null = null;
+
+interface DecodedToken {
+  exp: number; // expiration time in seconds
+}
+
+export function startTokenWatcher() {
+  const token = localStorage.getItem('token');
+  if (!token) return;
+
+  try {
+    const decoded: DecodedToken = jwtDecode(token);
+    const expiresAt = decoded.exp * 1000; // convert to milliseconds
+    const timeLeft = expiresAt - Date.now();
+
+    if (timeLeft <= 0) {
+      signOut(); // Already expired
+      return;
+    }
+
+    if (logoutTimer) clearTimeout(logoutTimer);
+
+    logoutTimer = setTimeout(() => {
+      signOut();
+    }, timeLeft);
+  } catch (error) {
+    console.error('Invalid token:', error);
+    signOut();
+  }
+}
