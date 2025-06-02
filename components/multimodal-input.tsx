@@ -238,14 +238,14 @@ function PureMultimodalInput({
 
       <div className="absolute bottom-0 p-2 w-fit flex flex-row justify-start gap-2">
         <AttachmentsButton fileInputRef={fileInputRef} status={status} />
-        <VoiceRecorder
+        {/* <VoiceRecorder
           onTranscriptionComplete={(text) => {
             setInput(text);
             adjustHeight();
           }}
           status={status === 'ready' ? 'idle' : status === 'submitted' ? 'transcribing' : 'recording'}
           disabled={status !== 'ready'}
-        />
+        /> */}
       </div>
 
       <div className="absolute bottom-0 right-0 p-2 w-fit flex flex-row justify-end">
