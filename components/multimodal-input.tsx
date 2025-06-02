@@ -24,6 +24,7 @@ import { SuggestedActions } from './suggested-actions';
 import equal from 'fast-deep-equal';
 import type { UseChatHelpers } from '@ai-sdk/react';
 import { apiClient } from '../lib/api-client';
+import { VoiceRecorder } from './voice-recorder';
 
 function PureMultimodalInput({
   chatId,
@@ -129,10 +130,10 @@ function PureMultimodalInput({
 
   const uploadFile = async (file: File) => {
     try {
-      const data = await apiClient.uploadFile(file);
+      const data = await apiClient.uploadFile(file, chatId);
       return {
         url: data.url,
-        name: data.pathname,
+        name: file.name,
         contentType: data.contentType,
       };
     } catch (error) {
@@ -235,8 +236,16 @@ function PureMultimodalInput({
         }}
       />
 
-      <div className="absolute bottom-0 p-2 w-fit flex flex-row justify-start">
+      <div className="absolute bottom-0 p-2 w-fit flex flex-row justify-start gap-2">
         <AttachmentsButton fileInputRef={fileInputRef} status={status} />
+        <VoiceRecorder
+          onTranscriptionComplete={(text) => {
+            setInput(text);
+            adjustHeight();
+          }}
+          status={status === 'ready' ? 'idle' : status === 'submitted' ? 'transcribing' : 'recording'}
+          disabled={status !== 'ready'}
+        />
       </div>
 
       <div className="absolute bottom-0 right-0 p-2 w-fit flex flex-row justify-end">
