@@ -174,14 +174,14 @@ function PureMultimodalInput({
           <SuggestedActions append={append} chatId={chatId} />
         )}
 
-      <input
+      {/* <input
         type="file"
         className="fixed -top-4 -left-4 size-0.5 opacity-0 pointer-events-none"
         ref={fileInputRef}
         multiple
         onChange={handleFileChange}
         tabIndex={-1}
-      />
+      /> */}
 
       {(attachments.length > 0 || uploadQueue.length > 0) && (
         <div
