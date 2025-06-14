@@ -1,8 +1,8 @@
 import { z } from 'zod';
 import type { Session } from '@/lib/types/auth';
 import { DataStreamWriter, streamObject, tool } from 'ai';
-import { getDocumentById, saveSuggestions } from '@/lib/db/queries';
-import { Suggestion } from '@/lib/db/schema';
+import { apiClient } from '@/lib/api-client';
+import { Suggestion } from '@/lib/api-client.types';
 import { generateUUID } from '@/lib/utils';
 import { myProvider } from '../providers';
 
@@ -23,7 +23,7 @@ export const requestSuggestions = ({
         .describe('The ID of the document to request edits'),
     }),
     execute: async ({ documentId }) => {
-      const document = await getDocumentById({ id: documentId });
+      const document = await apiClient.getDocumentById(documentId);
 
       if (!document || !document.content) {
         return {
@@ -63,20 +63,20 @@ export const requestSuggestions = ({
           content: suggestion,
         });
 
-        suggestions.push(suggestion);
+        // suggestions.push(suggestion);
       }
 
       if (session.user?.id) {
         const userId = session.user.id;
 
-        await saveSuggestions({
-          suggestions: suggestions.map((suggestion) => ({
-            ...suggestion,
-            userId,
-            createdAt: new Date(),
-            documentCreatedAt: document.createdAt,
-          })),
-        });
+      //   await saveSuggestions({
+      //     suggestions: suggestions.map((suggestion) => ({
+      //       ...suggestion,
+      //       userId,
+      //       createdAt: new Date(),
+      //       documentCreatedAt: document.createdAt,
+      //     })),
+      //   });
       }
 
       return {

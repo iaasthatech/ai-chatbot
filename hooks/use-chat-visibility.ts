@@ -40,7 +40,7 @@ export function useChatVisibility({
     mutate(unstable_serialize(getChatHistoryPaginationKey));
 
     try {
-      await apiClient.updateChatVisibility(chatId, { visibility: updatedVisibilityType });
+      await apiClient.updateChatVisibility(chatId, { isVisible: updatedVisibilityType === 'organisation' });
     } catch (error) {
       console.error('Failed to update chat visibility:', error);
       

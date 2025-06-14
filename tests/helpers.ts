@@ -40,7 +40,7 @@ export async function createAuthenticatedContext({
   const email = `test-${name}@playwright.com`;
   const password = generateId(16);
 
-  await page.goto('http://localhost:3000/register');
+  await page.goto('https://dentalai-backend-691118111893.us-central1.run.app//register');
   await page.getByPlaceholder('user@acme.com').click();
   await page.getByPlaceholder('user@acme.com').fill(email);
   await page.getByLabel('Password').click();

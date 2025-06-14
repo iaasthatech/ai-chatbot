@@ -2,6 +2,7 @@
 
 import type { User } from '@/lib/types/auth';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 import { PlusIcon } from '@/components/icons';
 import { SidebarHistory } from '@/components/sidebar-history';
@@ -40,10 +41,12 @@ export function AppSidebar({ user }: { user: User | undefined }) {
                   onClick={() => setOpenMobile(false)}
                   className="flex flex-row gap-1 items-center pl-4"
                 >
-                  <img
-                    src="/images/circle.png"
+                  <Image 
+                    src="/logo.png"
                     alt="Logo"
-                    className="w-5 h-5"
+                    width={24}
+                    height={24}
+                    className="size-5"
                   />
                   <span className="text-lg font-semibold text-black hover:bg-muted rounded-md cursor-pointer">
                     DentaMind AI
@@ -69,8 +72,6 @@ export function AppSidebar({ user }: { user: User | undefined }) {
               </div>
               <SidebarSetupProgress />
               <SidebarSearchInput
-                query={searchQuery}
-                setQuery={setSearchQuery}
                 onSearch={(q) => setSearchQuery(q)}
               />
             </>

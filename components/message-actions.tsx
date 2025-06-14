@@ -2,7 +2,7 @@ import type { Message } from 'ai';
 import { useSWRConfig } from 'swr';
 import { useCopyToClipboard } from 'usehooks-ts';
 
-import type { Vote } from '@/lib/db/schema';
+import type { Vote } from '@/lib/api-client.types';
 
 import { CopyIcon, ThumbDownIcon, ThumbUpIcon } from './icons';
 import { Button } from './ui/button';
@@ -97,6 +97,8 @@ export function PureMessageActions({
                             chatId,
                             messageId: message.id,
                             isUpvoted: true,
+                            createdAt: new Date(),
+                            updatedAt: new Date()
                           },
                         ];
                       },
@@ -149,6 +151,8 @@ export function PureMessageActions({
                             chatId,
                             messageId: message.id,
                             isUpvoted: false,
+                            createdAt: new Date(),
+                            updatedAt: new Date()
                           },
                         ];
                       },

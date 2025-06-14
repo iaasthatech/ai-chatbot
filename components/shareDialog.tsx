@@ -60,9 +60,9 @@ export function ShareDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded-2xl p-6 sm:max-w-md w-full space-y-6 shadow-xl border border-sidebar-border bg-sidebar text-sidebar-foreground z-50">
+      <DialogContent className="fixed left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-2xl p-6 sm:max-w-md w-full space-y-6 shadow-xl border border-sidebar-border bg-sidebar text-sidebar-foreground z-50">
         <DialogTitle className="text-2xl font-semibold flex items-center gap-2">
-          <LinkIcon className="w-5 h-5 text-sidebar-foreground/70" />
+          <LinkIcon className="size-5 text-sidebar-foreground/70" />
           Share this chat
         </DialogTitle>
         {summary && (
@@ -85,12 +85,12 @@ export function ShareDialog({
           >
             {copied ? (
               <>
-                <CheckIcon className="w-4 h-4" />
+                <CheckIcon className="size-4" />
                 Copied
               </>
             ) : (
               <>
-                <CopyIcon className="w-4 h-4" />
+                <CopyIcon className="size-4" />
                 Copy
               </>
             )}

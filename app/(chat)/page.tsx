@@ -41,7 +41,7 @@ export default function Page() {
     };
 
     initializeChat();
-  }, [router]);
+  }, [router, selectedModel]);
 
   if (isLoading) {
     return <div>Loading...</div>;

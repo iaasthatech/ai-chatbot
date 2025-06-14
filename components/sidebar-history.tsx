@@ -86,17 +86,17 @@ export function getChatHistoryPaginationKey(
     return null;
   }
   if (searchQuery) {
-    return `http://localhost:3001/api/chats/paginated?search=${encodeURIComponent(searchQuery)}`;
+    return `https://dentalai-backend-691118111893.us-central1.run.app//api/chats/paginated?search=${encodeURIComponent(searchQuery)}`;
   }
 
   if (pageIndex === 0)
-    return `http://localhost:3001/api/chats/paginated?limit=${PAGE_SIZE}`;
+    return `https://dentalai-backend-691118111893.us-central1.run.app//api/chats/paginated?limit=${PAGE_SIZE}`;
 
   const firstChatFromPage = previousPageData.chats.at(-1);
 
   if (!firstChatFromPage) return null;
 
-  return `http://localhost:3001/api/chats/paginated?ending_before=${firstChatFromPage.id}&limit=${PAGE_SIZE}`;
+  return `https://dentalai-backend-691118111893.us-central1.run.app/api/chats/paginated?ending_before=${firstChatFromPage.id}&limit=${PAGE_SIZE}`;
 }
 
 export function SidebarHistory({
@@ -244,6 +244,9 @@ export function SidebarHistory({
                               setShowDeleteDialog(true);
                             }}
                             setOpenMobile={setOpenMobile}
+                            handleOpenPopup={(chatId) => {
+                              // No-op since we're not using popups
+                            }}
                           />
                         ))}
                       </div>
@@ -264,6 +267,9 @@ export function SidebarHistory({
                               setShowDeleteDialog(true);
                             }}
                             setOpenMobile={setOpenMobile}
+                            handleOpenPopup={(chatId) => {
+                              // No-op since we're not using popups
+                            }}
                           />
                         ))}
                       </div>
@@ -284,6 +290,9 @@ export function SidebarHistory({
                               setShowDeleteDialog(true);
                             }}
                             setOpenMobile={setOpenMobile}
+                            handleOpenPopup={(chatId) => {
+                              // No-op since we're not using popups
+                            }}
                           />
                         ))}
                       </div>
@@ -304,6 +313,9 @@ export function SidebarHistory({
                               setShowDeleteDialog(true);
                             }}
                             setOpenMobile={setOpenMobile}
+                            handleOpenPopup={(chatId) => {
+                              // No-op since we're not using popups
+                            }}
                           />
                         ))}
                       </div>
@@ -324,6 +336,9 @@ export function SidebarHistory({
                               setShowDeleteDialog(true);
                             }}
                             setOpenMobile={setOpenMobile}
+                            handleOpenPopup={(chatId) => {
+                              // No-op since we're not using popups
+                            }}
                           />
                         ))}
                       </div>

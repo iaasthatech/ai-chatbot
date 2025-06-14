@@ -18,7 +18,7 @@ export class ApiClient {
 
   private constructor() {
     this.client = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001',
+      baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://dentalai-backend-691118111893.us-central1.run.app/',
       timeout: Number(process.env.NEXT_PUBLIC_API_TIMEOUT) || 30000,
       headers: {
         'Content-Type': 'application/json',

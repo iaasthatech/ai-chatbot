@@ -1,4 +1,4 @@
-import type { Document } from '@/lib/db/schema';
+import type { Document } from '@/lib/api-client.types';
 import { generateUUID } from '@/lib/utils';
 import { expect, test } from '../fixtures';
 

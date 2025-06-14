@@ -8,9 +8,8 @@ interface AuthFormProps {
   defaultEmail?: string;
   children: ReactNode;
 }
-
 export function AuthForm({ action, defaultEmail = '', children }: AuthFormProps) {
-  const [_, formAction] = useFormState(async (_state, formData) => {
+  const [_, formAction] = useFormState(async (_state: unknown, formData: FormData) => {
     action(formData);
     return {};
   }, {});

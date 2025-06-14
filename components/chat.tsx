@@ -46,7 +46,7 @@ export function Chat({
     stop,
     reload,
   } = useChat({
-    api: `http://localhost:3001/api/chats`,
+    api: `https://dentalai-backend-691118111893.us-central1.run.app//api/chats`,
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('token')}`

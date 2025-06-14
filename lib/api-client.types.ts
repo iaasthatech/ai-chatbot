@@ -15,6 +15,7 @@ export interface RegisterRequest {
   email: string;
   password: string;
   organizationId: string;
+  name: string;
 }
 
 export interface OrganizationRequest {
