@@ -135,6 +135,7 @@ function PureMultimodalInput({
         url: data.url,
         name: file.name,
         contentType: data.contentType,
+        pathname: data.pathname,
       };
     } catch (error) {
       toast.error('Failed to upload file, please try again!');
@@ -275,8 +276,7 @@ function PureMultimodalInput({
                 id: `voice-${Date.now()}`, // Unique ID for new message
                 role: 'user',
                 content: '',
-                attachments: [uploaded],
-                type: 'attachment', // or your custom message type for audio
+                experimental_attachments: [uploaded],
                 createdAt: new Date(),
               });
 

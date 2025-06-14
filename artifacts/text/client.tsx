@@ -12,7 +12,7 @@ import {
 } from '@/components/icons';
 import { Suggestion } from '@/lib/api-client.types';
 import { toast } from 'sonner';
-import { getSuggestions } from '../actions';
+import { apiClient } from '@/lib/api-client';
 
 interface TextArtifactMetadata {
   suggestions: Array<Suggestion>;
@@ -22,7 +22,7 @@ export const textArtifact = new Artifact<'text', TextArtifactMetadata>({
   kind: 'text',
   description: 'Useful for text content, like drafting essays and emails.',
   initialize: async ({ documentId, setMetadata }) => {
-    const suggestions = await getSuggestions({ documentId });
+    const suggestions = await apiClient.getSuggestionsByDocument(documentId);
 
     setMetadata({
       suggestions,

@@ -92,13 +92,7 @@ const PureChatItem = ({
                   className="cursor-pointer flex-row justify-between"
                   onClick={() => {
                     setVisibilityType('organisation');
-                    const summary = chat.messages
-                      ? chat.messages
-                          .slice(0, 2)
-                          .map((m) => m.text)
-                          .join(' ')
-                      : chat.title;
-                    openShareDialog(chat.id, 'organisation', summary);
+                    openShareDialog(chat.id, 'organisation');
                   }}
                 >
                   <div className="flex flex-row gap-2 items-center">

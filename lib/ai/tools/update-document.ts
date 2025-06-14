@@ -1,7 +1,7 @@
 import { DataStreamWriter, tool } from 'ai';
 import type { Session } from '@/lib/types/auth';
 import { z } from 'zod';
-import { getDocumentById, saveDocument } from '@/lib/db/queries';
+import { apiClient } from '@/lib/api-client';
 import { documentHandlersByArtifactKind } from '@/lib/artifacts/server';
 
 interface UpdateDocumentProps {
@@ -19,7 +19,7 @@ export const updateDocument = ({ session, dataStream }: UpdateDocumentProps) =>
         .describe('The description of changes that need to be made'),
     }),
     execute: async ({ id, description }) => {
-      const document = await getDocumentById({ id });
+      const document = await apiClient.getDocumentById(id);
 
       if (!document) {
         return {

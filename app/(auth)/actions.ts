@@ -71,7 +71,7 @@ export async function registerAction(
   }
 
   try {
-    await apiClient.register({ email, password, organizationId });
+    await apiClient.register({ name: "org-name", email, password, organizationId });
     return { status: 'success' };
   } catch (error: any) {
     if (error.message?.includes('already exists')) {

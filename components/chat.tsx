@@ -16,7 +16,7 @@ import { getChatHistoryPaginationKey } from './sidebar-history';
 import { toast } from './toast';
 import type { Session } from '@/lib/types/auth';
 import { useSearchParams } from 'next/navigation';
-import { apiClient } from '@/lib/api-client';
+import { apiClient, API_URL } from '@/lib/api-client';
 import type { Vote } from '@/lib/api-client.types';
 import { uuid } from 'drizzle-orm/pg-core';
 
@@ -46,7 +46,7 @@ export function Chat({
     stop,
     reload,
   } = useChat({
-    api: `http://localhost:3001/api/chats`,
+    api: API_URL + `/api/chats`,
     headers: {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${localStorage.getItem('token')}`

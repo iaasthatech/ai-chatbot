@@ -1,14 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import { Chat } from '@/components/chat';
 import { DataStreamHandler } from '@/components/data-stream-handler';
 import { DEFAULT_CHAT_MODEL } from '@/lib/ai/models';
 import type { Attachment, UIMessage } from 'ai';
 import { apiClient } from '@/lib/api-client';
-import { use } from 'react';
-import { promises } from 'dns';
 
 type DBMessage = {
   id: string;
@@ -18,14 +16,14 @@ type DBMessage = {
   createdAt: Date;
 };
 
-export default function Page({ params }: { params: Promise<{ id: string }> }) {
+export default function Page() {
   const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
   const [chat, setChat] = useState<any>(null);
   const [messages, setMessages] = useState<Array<UIMessage>>([]);
   const [selectedModel, setSelectedModel] = useState(DEFAULT_CHAT_MODEL);
   const [isLoading, setIsLoading] = useState(true);
-
-  const { id } = use(params);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -42,10 +40,7 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
           return;
         }
 
-        // Check if chat is private and user is authorized
         if (chatData.visibility === 'private') {
-          // You might want to decode the JWT token to get user ID
-          // For now, we'll just check if token exists
           if (!token) {
             router.push('/404');
             return;
@@ -54,8 +49,6 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
 
         const messagesFromDb = await apiClient.getMessagesInChat(id);
         const convertedMessages = convertToUIMessages(messagesFromDb);
-
-        // Get chat model from localStorage
         const chatModel = localStorage.getItem('model') || DEFAULT_CHAT_MODEL;
 
         setChat(chatData);
@@ -126,12 +119,13 @@ export default function Page({ params }: { params: Promise<{ id: string }> }) {
         selectedChatModel={selectedModel}
         selectedVisibilityType={chat.visibility}
         isReadonly={false} // You might want to implement proper readonly logic based on user permissions
-        session={{
-          user: { id: '1', email: 'user@example.com', type: 'regular' },
-          expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(), // 24 hours from now
-        }}
+        // session={{ 
+        //   user: { id: '1', email: 'user@example.com', type: 'regular' },
+        //   expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString() // 24 hours from now
+        // }}
       />
       <DataStreamHandler id={id} />
     </>
   );
 }
+

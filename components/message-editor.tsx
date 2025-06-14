@@ -6,6 +6,7 @@ import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { Textarea } from './ui/textarea';
 import { deleteTrailingMessages } from '@/app/(chat)/actions';
 import { UseChatHelpers } from '@ai-sdk/react';
+import { apiClient } from '@/lib/api-client';
 
 export type MessageEditorProps = {
   message: Message;
@@ -71,9 +72,8 @@ export function MessageEditor({
           onClick={async () => {
             setIsSubmitting(true);
 
-            await deleteTrailingMessages({
-              id: message.id,
-            });
+            // TODO: Implement this
+            // await apiClient.deleteTrailingMessages(message.id);
 
             // @ts-expect-error todo: support UIMessage in setMessages
             setMessages((messages) => {

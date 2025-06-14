@@ -39,18 +39,18 @@ export async function deleteTrailingMessages(chatId: string, messageId: string) 
   }
 }
 
-export async function updateChatVisibility({
-  chatId,
-  visibility,
-}: {
-  chatId: string;
-  visibility: VisibilityType;
-}) {
-  try {
-    await apiClient.updateChatVisibility(chatId, visibility);
-    return { success: true };
-  } catch (error) {
-    console.error('Failed to update chat visibility:', error);
-    return { success: false, error };
-  }
-}
+// export async function updateChatVisibility({
+//   chatId,
+//   visibility,
+// }: {
+//   chatId: string;
+//   visibility: VisibilityType;
+// }) {
+//   try {
+//     await apiClient.updateChatVisibility(chatId, visibility);
+//     return { success: true };
+//   } catch (error) {
+//     console.error('Failed to update chat visibility:', error);
+//     return { success: false, error };
+//   }
+// }
