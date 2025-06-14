@@ -135,6 +135,7 @@ function PureMultimodalInput({
         url: data.url,
         name: file.name,
         contentType: data.contentType,
+        pathname: data.pathname,
       };
     } catch (error) {
       toast.error('Failed to upload file, please try again!');
